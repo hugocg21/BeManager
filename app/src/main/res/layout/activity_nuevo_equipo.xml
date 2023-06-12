@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_pizarra_canasta"
+    android:gravity="center"
+    android:theme="@style/MiActionBar"
+    tools:context=".Menus.Equipo.NuevoEquipo">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutContainerNuevoEquipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewNuevoEquipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutContainerNuevoEquipo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/custom_linear_layout_redondeado"
+                android:padding="24dp">
+
+                <TextView
+                    android:id="@+id/textViewEquipoNuevo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="Equipo nuevo"
+                    android:textColor="@color/azul"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/constraintLayoutContainerNuevoEquipo" />
+
+                <EditText
+                    android:id="@+id/editTextNombreNuevoEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_edit_text_redondeado"
+                    android:hint="Nombre equipo"
+                    android:inputType="textPersonName"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/azul"
+                    android:textColorHint="@color/azul"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewEquipoNuevo" />
+
+                <Spinner
+                    android:id="@+id/spinnerCategoriaNuevoEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_spinner_down"
+                    android:hint="Categoria"
+                    android:inputType="textPersonName"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextNombreNuevoEquipo"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <EditText
+                    android:id="@+id/editTextSedeNuevoEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_edit_text_redondeado"
+                    android:hint="Sede del equipo"
+                    android:inputType="textPersonName"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/azul"
+                    android:textColorHint="@color/azul"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerCategoriaNuevoEquipo" />
+
+                <Button
+                    android:id="@+id/buttonAnadirNuevoEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_button_rounded"
+                    android:text="Crear equipo"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextSedeNuevoEquipo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

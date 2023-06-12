@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    tools:context=".Dashboard"
+    tools:openDrawer="start">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/azul"
+            android:elevation="4dp">
+
+            <ImageView
+                android:id="@+id/imageViewLogoToolbarDashboard"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/logo_splash_screen" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/textViewNombreLogueadoDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/azul"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <GridView
+            android:id="@+id/gridViewEquiposDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/azul"
+            android:numColumns="2"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:verticalSpacing="8dp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationViewDashboard"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/navigation_view_header" />
+
+            <!-- RecyclerView to display the teams -->
+            <TextView
+                android:id="@+id/textViewEspacioBlanco"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <!-- Button to add new teams -->
+            <Button
+                android:id="@+id/buttonAnadirNuevoEquipoNavigationViewDashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/custom_button_rounded"
+                android:text="Añadir equipo"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/buttonCerrarSesionNavigationViewDashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/custom_button_rounded"
+                android:text="Cerrar sesión"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

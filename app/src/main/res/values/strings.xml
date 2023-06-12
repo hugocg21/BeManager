@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BeManager</string>
+    <string name="menu_drawer_open">Drawer abierto</string>
+    <string name="menu_drawer_close">Drawer cerrado</string>
+</resources>
