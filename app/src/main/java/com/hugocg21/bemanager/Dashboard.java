@@ -64,6 +64,9 @@ public class Dashboard extends AppCompatActivity {
 
         //Creamos, definimos y asignamos la Toolbar de la actividad
         Toolbar toolbar = findViewById(R.id.toolbarDashboard);
+
+        toolbar.setTitle("");
+
         setSupportActionBar(toolbar);
 
         //Inicializamos el DrawerLayout, lo inflamos y lo asignamos al Dashboard

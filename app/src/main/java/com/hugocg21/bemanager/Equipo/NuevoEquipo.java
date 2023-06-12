@@ -96,7 +96,6 @@ public class NuevoEquipo extends AppCompatActivity {
         equipo.put("nombreEquipo", nombreEquipo);
         equipo.put("categoriaEquipo", categoriaEquipo);
         equipo.put("sedeEquipo", sedeEquipo);
-        equipo.put("numJugadores", numJugadoresEquipo);
 
         //Recogemos la referencia a la colección de los equipos y no hay problemas, entra aquí
         collectionReference_equipos.document(nombreEquipo).set(equipo).addOnSuccessListener(new OnSuccessListener<Void>() {

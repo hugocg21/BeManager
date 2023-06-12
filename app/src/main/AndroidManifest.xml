@@ -7,51 +7,44 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="BeManager"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BeManager"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
-
         <activity
             android:name=".Entrenamientos.DashboardEntrenamientos"
             android:exported="false"
             android:label="Entrenamientos"
             android:parentActivityName=".Equipo.DashboardEquipo"
             android:theme="@style/MiActionBar" />
-
         <activity
-            android:name=".Entrenamientos.Ejercicios.NuevoEjercicio"
+            android:name=".Entrenamientos.NuevoEjercicio"
             android:exported="false"
             android:label="Nuevo ejercicio"
             android:parentActivityName=".Entrenamientos.DashboardEntrenamientos"
             android:theme="@style/MiActionBar" />
-
         <activity
             android:name=".Entrenamientos.NuevoEntrenamiento"
             android:exported="false"
             android:label="Nuevo entrenamiento"
             android:parentActivityName=".Equipo.DashboardEquipo"
             android:theme="@style/MiActionBar" />
-
         <activity
             android:name=".Jugadores.NuevoJugador"
             android:exported="false"
             android:label="Nuevo jugador"
             android:parentActivityName=".Equipo.DashboardEquipo"
             android:theme="@style/MiActionBar" />
-
         <activity
             android:name=".SeleccionEquipo"
             android:exported="false" />
-
         <activity
             android:name=".Equipo.DashboardEquipo"
             android:exported="false"
             android:label="Equipo"
             android:parentActivityName=".Dashboard"
             android:theme="@style/MiActionBar" />
-
         <activity
             android:name=".SplashScreen"
             android:exported="true">
@@ -61,30 +54,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Login.CambiarContrasena"
             android:exported="false" />
-
         <activity
             android:name=".Login.Registro"
             android:exported="false" />
-
         <activity
             android:name=".Login.Login"
             android:exported="false" />
-
         <activity
             android:name=".Dashboard"
             android:exported="false" />
-
         <activity
             android:name=".Equipo.NuevoEquipo"
             android:exported="false"
             android:label="Nuevo Equipo"
             android:parentActivityName=".Dashboard"
             android:theme="@style/MiActionBar" />
-
     </application>
 
 </manifest>

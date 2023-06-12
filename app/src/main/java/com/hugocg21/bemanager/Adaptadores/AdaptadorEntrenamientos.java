@@ -13,6 +13,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.hugocg21.bemanager.Clases.Entrenamiento;
+import com.hugocg21.bemanager.Clases.Jugador;
 import com.hugocg21.bemanager.R;
 
 public class AdaptadorEntrenamientos extends FirestoreRecyclerAdapter<Entrenamiento, AdaptadorEntrenamientos.ViewHolderEntrenamientos> {
@@ -33,6 +34,11 @@ public class AdaptadorEntrenamientos extends FirestoreRecyclerAdapter<Entrenamie
     @Override
     protected void onBindViewHolder(@NonNull ViewHolderEntrenamientos holder, int position, @NonNull Entrenamiento entrenamiento) {
         holder.bindData(entrenamiento);
+    }
+
+    public void actualizarOpciones(FirestoreRecyclerOptions<Entrenamiento> firestoreRecyclerOptions) {
+        this.updateOptions(firestoreRecyclerOptions);
+        notifyDataSetChanged();
     }
 
     public class ViewHolderEntrenamientos extends RecyclerView.ViewHolder {

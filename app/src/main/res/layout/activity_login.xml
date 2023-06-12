@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/background_bemanager"
     android:gravity="center"
     tools:context=".Login.Login">
 
@@ -168,42 +168,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonCrearCuentaLogin" />
 
-                <ImageButton
-                    android:id="@+id/imageButtonFacebookLogin"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/custom_button_social"
-                    app:layout_constraintEnd_toStartOf="@+id/imageButtonGoogleLogin"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewPasswordOlvidadaLogin"
-                    app:srcCompat="@drawable/icono_facebook"
-                    tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
-
-                <ImageButton
-                    android:id="@+id/imageButtonGoogleLogin"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/custom_button_social"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewPasswordOlvidadaLogin"
-                    app:srcCompat="@drawable/icono_google"
-                    tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
-
-                <ImageButton
-                    android:id="@+id/imageButtonTwitterLogin"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/custom_button_social"
-                    app:layout_constraintStart_toEndOf="@+id/imageButtonGoogleLogin"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewPasswordOlvidadaLogin"
-                    app:srcCompat="@drawable/icono_twitter"
-                    tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -221,6 +187,9 @@
                 android:layout_height="match_parent"
                 android:padding="10dp"
                 app:srcCompat="@drawable/logo_redondo" />
+
         </androidx.cardview.widget.CardView>
+
     </RelativeLayout>
+
 </RelativeLayout>

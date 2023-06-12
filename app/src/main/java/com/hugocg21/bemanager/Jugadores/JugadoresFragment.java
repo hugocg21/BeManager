@@ -35,14 +35,14 @@ import com.hugocg21.bemanager.R;
 import java.util.Objects;
 
 public class JugadoresFragment extends Fragment {
-    RecyclerView recyclerView_jugadores;
-    FirebaseAuth auth;
-    FirebaseFirestore database;
-    FirebaseUser usuarioLogueado;
-    CollectionReference collectionReference_jugadores, collectionReference_equipos, collectionReference_usuario;
-    AdaptadorJugadores adaptadorJugadores;
-    ImageView imageView_filtroJugadores, imageView_ordenarJugadoresAscendiente, imageView_ordenarJugadoresDescendiente;
-    String filtroActual;
+    private RecyclerView recyclerView_jugadores;
+    private FirebaseAuth auth;
+    private FirebaseFirestore database;
+    private FirebaseUser usuarioLogueado;
+    private CollectionReference collectionReference_jugadores, collectionReference_equipos, collectionReference_usuario;
+    private AdaptadorJugadores adaptadorJugadores;
+    private ImageView imageView_filtroJugadores, imageView_ordenarJugadoresAscendiente, imageView_ordenarJugadoresDescendiente;
+    private String filtroActual;
 
     public JugadoresFragment() {
     }

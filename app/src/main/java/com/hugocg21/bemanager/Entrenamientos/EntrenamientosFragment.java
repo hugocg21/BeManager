@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.hugocg21.bemanager.Adaptadores.AdaptadorEntrenamientos;
 import com.hugocg21.bemanager.Clases.Entrenamiento;
+import com.hugocg21.bemanager.Clases.Jugador;
 import com.hugocg21.bemanager.R;
 
 import java.util.Objects;
@@ -39,6 +41,7 @@ public class EntrenamientosFragment extends Fragment {
     FirebaseUser usuarioLogueado;
     CollectionReference collectionReference_entrenamientos, collectionReference_equipos, collectionReference_usuario;
     AdaptadorEntrenamientos adaptadorEntrenamientos;
+    ImageView imageView_ordenarEntrenamientosAscendiente, imageView_ordenarEntrenamientosDescendiente;
 
     public EntrenamientosFragment() {
     }
@@ -49,6 +52,9 @@ public class EntrenamientosFragment extends Fragment {
 
         recyclerView_entrenamientos = view.findViewById(R.id.recyclerViewEntrenamientosFragmentEntrenamientos);
         recyclerView_entrenamientos.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        imageView_ordenarEntrenamientosAscendiente = view.findViewById(R.id.imageViewOrdenarFragmentEntrenamientosAscendiente);
+        imageView_ordenarEntrenamientosDescendiente = view.findViewById(R.id.imageViewOrdenarFragmentEntrenamientosDescendiente);
 
         //Obtenemos la instancia de la base de datos y de la autenticación de Firebase
         database = FirebaseFirestore.getInstance();
@@ -116,7 +122,43 @@ public class EntrenamientosFragment extends Fragment {
         adaptadorEntrenamientos.notifyDataSetChanged();
         recyclerView_entrenamientos.setAdapter(adaptadorEntrenamientos);
 
+        imageView_ordenarEntrenamientosAscendiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ordernarJugadoresAscendente();
+            }
+        });
+
+        imageView_ordenarEntrenamientosDescendiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ordernarJugadoresDescendiente();
+            }
+        });
+
         return view;
+    }
+
+    private void ordernarJugadoresDescendiente() {
+        Query query = collectionReference_entrenamientos.orderBy("fechaEntrenamiento", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<Entrenamiento> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Entrenamiento>()
+                .setQuery(query, Entrenamiento.class).build();
+        adaptadorEntrenamientos.actualizarOpciones(firestoreRecyclerOptions);
+
+        imageView_ordenarEntrenamientosDescendiente.setVisibility(View.INVISIBLE);
+        imageView_ordenarEntrenamientosAscendiente.setVisibility(View.VISIBLE);
+    }
+
+    private void ordernarJugadoresAscendente() {
+        Query query = collectionReference_entrenamientos.orderBy("fechaEntrenamiento", Query.Direction.ASCENDING);
+
+        FirestoreRecyclerOptions<Entrenamiento> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Entrenamiento>()
+                .setQuery(query, Entrenamiento.class).build();
+        adaptadorEntrenamientos.actualizarOpciones(firestoreRecyclerOptions);
+
+        imageView_ordenarEntrenamientosAscendiente.setVisibility(View.INVISIBLE);
+        imageView_ordenarEntrenamientosDescendiente.setVisibility(View.VISIBLE);
     }
 
     @Override

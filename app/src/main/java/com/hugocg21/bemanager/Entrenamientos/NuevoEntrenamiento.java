@@ -2,6 +2,7 @@ package com.hugocg21.bemanager.Entrenamientos;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -75,7 +76,11 @@ public class NuevoEntrenamiento extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int anioSeleccionado, int mesSeleccionado, int diaSeleccionado) {
-                                String fechaSeleccionada = diaSeleccionado + "-" + mesSeleccionado + "-" + anioSeleccionado;
+                                // Sumar 1 al mes seleccionado
+                                mesSeleccionado += 1;
+
+                                // Formatear la fecha con ceros a la izquierda
+                                String fechaSeleccionada = String.format("%02d-%02d-%d", diaSeleccionado, mesSeleccionado, anioSeleccionado);
                                 editText_fechaEntrenamiento.setText(fechaSeleccionada);
                             }
                         }, anio, mes, dia);
@@ -95,7 +100,8 @@ public class NuevoEntrenamiento extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int horaSeleccionada, int minutoSeleccionado) {
-                                String horaFechaSeleccionada = horaSeleccionada + ":" + minutoSeleccionado;
+                                // Formatear la hora con ceros a la izquierda
+                                String horaFechaSeleccionada = String.format("%02d:%02d", horaSeleccionada, minutoSeleccionado);
                                 editText_horaEntrenamiento.setText(horaFechaSeleccionada);
                             }
                         }, hora, min, true);
@@ -103,6 +109,7 @@ public class NuevoEntrenamiento extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
+
 
         //Método al hacer click en el Button de añadir un nuevo equipo
         button_nuevoEntrenamiento.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +122,7 @@ public class NuevoEntrenamiento extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Todos los campos deben estar completos", Toast.LENGTH_SHORT).show();
                 } else {
                     crearEntrenamiento(fechaEntrenamiento, horaEntrenamiento);
+                    startActivity(new Intent(getApplicationContext(), DashboardEntrenamientos.class));
                     finish();
                 }
             }
