@@ -26,13 +26,13 @@ import com.hugocg21.bemanager.Dashboard;
 import com.hugocg21.bemanager.R;
 
 public class Login extends AppCompatActivity {
-    TextView textView_recuperarContrasena; //Creamos el TextView de recuperar la contraseña
-    EditText editText_correoLogin, editText_contrasenaLogin; //Creamos los EditTexts para introducir las credenciales de acceso
-    Button button_login, button_crearCuenta; //Creamos los Buttons de loguearse y crear cuenta
-    ImageButton imageButton_verContrasena, imageButton_ocultarContrasena; //Creamos la ImageButtons para ver y ocultar la contraseña
-    CheckBox checkBox_recordarSesion; //Creamos el CheckBox para mantener la sesión iniciada
-    FirebaseAuth auth; //Creamos la variable de autenticación
-    ProgressDialog progressDialog; //Creamos el ProgressDialog para la espera de inicio de sesión
+    private TextView textView_recuperarContrasena; //Creamos el TextView de recuperar la contraseña
+    private EditText editText_correoLogin, editText_contrasenaLogin; //Creamos los EditTexts para introducir las credenciales de acceso
+    private Button button_login, button_crearCuenta; //Creamos los Buttons de loguearse y crear cuenta
+    private ImageButton imageButton_verContrasena, imageButton_ocultarContrasena; //Creamos la ImageButtons para ver y ocultar la contraseña
+    private CheckBox checkBox_recordarSesion; //Creamos el CheckBox para mantener la sesión iniciada
+    private FirebaseAuth auth; //Creamos la variable de autenticación
+    private ProgressDialog progressDialog; //Creamos el ProgressDialog para la espera de inicio de sesión
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

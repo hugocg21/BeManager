@@ -29,19 +29,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.hugocg21.bemanager.Adaptadores.AdaptadorEntrenamientos;
 import com.hugocg21.bemanager.Clases.Entrenamiento;
-import com.hugocg21.bemanager.Clases.Jugador;
 import com.hugocg21.bemanager.R;
 
 import java.util.Objects;
 
 public class EntrenamientosFragment extends Fragment {
-    RecyclerView recyclerView_entrenamientos;
-    FirebaseAuth auth;
-    FirebaseFirestore database;
-    FirebaseUser usuarioLogueado;
-    CollectionReference collectionReference_entrenamientos, collectionReference_equipos, collectionReference_usuario;
-    AdaptadorEntrenamientos adaptadorEntrenamientos;
-    ImageView imageView_ordenarEntrenamientosAscendiente, imageView_ordenarEntrenamientosDescendiente;
+    private RecyclerView recyclerView_entrenamientos;
+    private FirebaseAuth auth;
+    private FirebaseFirestore database;
+    private FirebaseUser usuarioLogueado;
+    private CollectionReference collectionReference_entrenamientos, collectionReference_equipos, collectionReference_usuario;
+    private AdaptadorEntrenamientos adaptadorEntrenamientos;
+    private ImageView imageView_ordenarEntrenamientosAscendiente, imageView_ordenarEntrenamientosDescendiente;
 
     public EntrenamientosFragment() {
     }

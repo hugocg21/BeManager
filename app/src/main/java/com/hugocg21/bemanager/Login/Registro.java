@@ -34,14 +34,14 @@ import java.util.Map;
 
 public class Registro extends AppCompatActivity {
     //Creamos los EditText de correo, usuario, contraseña y repetir contraseña del registro
-    EditText editText_correoRegistro, editText_usuarioRegistro, editText_contrasenaRegistro, editText_repetirContrasenaRegistro;
-    Button button_registro, button_volver; //Creamos los botones de registro y volver del registro
+    private EditText editText_correoRegistro, editText_usuarioRegistro, editText_contrasenaRegistro, editText_repetirContrasenaRegistro;
+    private Button button_registro, button_volver; //Creamos los botones de registro y volver del registro
 
     //Creamos los ImageButtons de ver y ocultar las contraseñas del registro
-    ImageButton imageButton_verContrasena, imageButton_ocultarContrasena, imageButton_verRepetirContrasena, imageButton_ocultarRepetirContrasena;
-    FirebaseFirestore database; //Creamos la variable de la base de datos
-    FirebaseAuth auth; //Creamos la variable de autenticación
-    ProgressDialog progressDialog; //Creamos el ProgressDialog para la espera de inicio de sesión
+    private ImageButton imageButton_verContrasena, imageButton_ocultarContrasena, imageButton_verRepetirContrasena, imageButton_ocultarRepetirContrasena;
+    private FirebaseFirestore database; //Creamos la variable de la base de datos
+    private FirebaseAuth auth; //Creamos la variable de autenticación
+    private ProgressDialog progressDialog; //Creamos el ProgressDialog para la espera de inicio de sesión
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

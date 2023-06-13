@@ -1,19 +1,23 @@
 package com.hugocg21.bemanager.Clases;
 
+//Clase que define como es un Equipo
 public class Equipo {
-    //Atributos de un equipo
+    //Creamos los Strings para almacenar el nombre, categoría y sede del equipo
     private String nombreEquipo, categoriaEquipo, sedeEquipo;
 
-    //Constructor que inicializa y crea un objeto de tipo Equipo
+    //Constructor que define como es un objeto Equipo e inicializa los datos
     public Equipo(String nombreEquipo, String categoriaEquipo, String sedeEquipo, int numJugadoresEquipo) {
         this.nombreEquipo = nombreEquipo;
         this.categoriaEquipo = categoriaEquipo;
         this.sedeEquipo = sedeEquipo;
     }
 
-    public Equipo(){}
+    //Constructor de Equipo sin datos
+    public Equipo() {
+    }
 
-    //Getters y setters de todos los atributos de la clase
+
+    //Métodos Get y Set del nombre del equipo
     public String getNombreEquipo() {
         return nombreEquipo;
     }
@@ -22,6 +26,8 @@ public class Equipo {
         this.nombreEquipo = nombreEquipo;
     }
 
+
+    //Métodos Get y Set de la categoría del equipo
     public String getCategoriaEquipo() {
         return categoriaEquipo;
     }
@@ -30,6 +36,8 @@ public class Equipo {
         this.categoriaEquipo = categoriaEquipo;
     }
 
+
+    //Métodos Get y Set de la sede del equipo
     public String getSedeEquipo() {
         return sedeEquipo;
     }

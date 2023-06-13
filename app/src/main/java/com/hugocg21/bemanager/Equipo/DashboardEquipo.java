@@ -14,20 +14,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.hugocg21.bemanager.Jugadores.JugadoresFragment;
 import com.hugocg21.bemanager.Entrenamientos.EntrenamientosFragment;
 import com.hugocg21.bemanager.Entrenamientos.NuevoEntrenamiento;
+import com.hugocg21.bemanager.Jugadores.JugadoresFragment;
 import com.hugocg21.bemanager.Jugadores.NuevoJugador;
 import com.hugocg21.bemanager.R;
 import com.hugocg21.bemanager.databinding.ActivityDashboardEquipoBinding;
 
 public class DashboardEquipo extends AppCompatActivity {
-    ActivityDashboardEquipoBinding activityDashboardEquipoBinding; //Creamos una variable binding para poder bindear los datos
+    private ActivityDashboardEquipoBinding activityDashboardEquipoBinding; //Creamos una variable binding para poder bindear los datos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +36,10 @@ public class DashboardEquipo extends AppCompatActivity {
         activityDashboardEquipoBinding = ActivityDashboardEquipoBinding.inflate(getLayoutInflater());
         setContentView(activityDashboardEquipoBinding.getRoot());
 
+        //Mostramos como fragment principal el de los jugadores
+        cambiarFragment(new JugadoresFragment());
+
+        //Creamos el objeto SharedPrefereecs y un String para almacenar el equipo que ha sido seleccionado
         SharedPreferences sharedPreferences = getSharedPreferences("datos", MODE_PRIVATE);
         String equipo = sharedPreferences.getString("nombreEquipo", null);
 
@@ -44,21 +47,21 @@ public class DashboardEquipo extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("nombreEquipo", equipo);
 
-        cambiarFragment(new JugadoresFragment());
-
         //Bindeamos el BottomNavigationView
         activityDashboardEquipoBinding.bottomNavigationViewEquipoDasboard.setBackground(null);
 
         //Método para abrir cada Fragment dependiendo de que item del menú se clickee
         activityDashboardEquipoBinding.bottomNavigationViewEquipoDasboard.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.bottomMenuJugadoresDashboardEquipo) {
-                JugadoresFragment jugadoresFragment = new JugadoresFragment(); //Creamos un objeto de tipo JugadoresFragment
-                jugadoresFragment.setArguments(bundle); //Guardamos el bundle con el nombre del equipo
-                cambiarFragment(jugadoresFragment); //Cambiamos el Fragment al de la lista de jugadores
+                //Creamos un objeto de tipo JugadoresFragment, guardamos el bundle con el nombre del equipo y cambiamos el Fragment al de la lista de jugadores
+                JugadoresFragment jugadoresFragment = new JugadoresFragment();
+                jugadoresFragment.setArguments(bundle);
+                cambiarFragment(jugadoresFragment);
             } else if (item.getItemId() == R.id.bottomMenuEntrenamientosDashboardEquipo) {
-                EntrenamientosFragment entrenamientosFragment = new EntrenamientosFragment(); //Creamos un objeto de tipo EntrenamientosFragment
-                entrenamientosFragment.setArguments(bundle); //Guardamos el bundle con el nombre del equipo
-                cambiarFragment(entrenamientosFragment); //Cambiamos el Fragment al de la lista de entrenamientos
+                //Creamos un objeto de tipo EntrenamientosFragment, guardamos el bundle con el nombre del equipo y cambiamos el Fragment al de la lista de entrenamientos
+                EntrenamientosFragment entrenamientosFragment = new EntrenamientosFragment();
+                entrenamientosFragment.setArguments(bundle);
+                cambiarFragment(entrenamientosFragment);
             }
 
             return true;
@@ -76,14 +79,19 @@ public class DashboardEquipo extends AppCompatActivity {
 
     //Método para cambiar los Fragments de la actividad
     private void cambiarFragment(Fragment fragment) {
+        //Creamos un objeto FragmentManager para obtener y controlar el cambio de fragmentos
         FragmentManager fragmentManager = getSupportFragmentManager();
+
+        //Creamos un objeto FragmentTransaction para comenzar la transición de el manager del fragmento, lo asignamos al Frame Layout
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutEquipoDashboard, fragment);
         fragmentTransaction.addToBackStack(null);
+
+        //Confirmamos el cambio
         fragmentTransaction.commit();
     }
 
-    //Método para mostrar
+    //Método para mostrar el Dialog inferior para crear un jugador o un entrenamiento
     private void showBottomDialog() {
         //Creamos un objeto de tipo Dialog y lo adaptamos a la View
         final Dialog dialog = new Dialog(this);
@@ -99,8 +107,9 @@ public class DashboardEquipo extends AppCompatActivity {
         nuevoJugador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), NuevoJugador.class)); //Creamos un Intent y abrimos la actividad de crear un nuevo jugador
-                dialog.dismiss(); //Cerramos el Dialog del menú inferior
+                //Creamos un Intent y abrimos la actividad de crear un nuevo jugador y cerramos el Dialog del menú inferior
+                startActivity(new Intent(getApplicationContext(), NuevoJugador.class));
+                dialog.dismiss();
             }
         });
 
@@ -108,6 +117,7 @@ public class DashboardEquipo extends AppCompatActivity {
         nuevoEntrenamiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Creamos un Intent y abrimos la actividad de crear un nuevo entrenamiento y cerramos el Dialog del menú inferior
                 startActivity(new Intent(getApplicationContext(), NuevoEntrenamiento.class));
                 dialog.dismiss();
             }

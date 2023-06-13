@@ -35,15 +35,18 @@ import com.hugocg21.bemanager.R;
 import java.util.Objects;
 
 public class JugadoresFragment extends Fragment {
-    private RecyclerView recyclerView_jugadores;
-    private FirebaseAuth auth;
-    private FirebaseFirestore database;
-    private FirebaseUser usuarioLogueado;
-    private CollectionReference collectionReference_jugadores, collectionReference_equipos, collectionReference_usuario;
-    private AdaptadorJugadores adaptadorJugadores;
-    private ImageView imageView_filtroJugadores, imageView_ordenarJugadoresAscendiente, imageView_ordenarJugadoresDescendiente;
-    private String filtroActual;
+    private RecyclerView recyclerView_jugadores; //Creamos el RecyclerView del Fragment de los jugadores
+    private FirebaseFirestore database; //Creamos el objeto de la base de datos
+    private FirebaseAuth auth; //Creamos el objeto de la autenticación de usuario
+    private FirebaseUser usuarioLogueado; //Creamos el objeto de usuario
 
+    //Creamos las referencias a las colecciones jugadores, equipos y usuarios
+    private CollectionReference collectionReference_jugadores, collectionReference_equipos, collectionReference_usuario;
+    private AdaptadorJugadores adaptadorJugadores; //Cremos el adaptador
+    private ImageView imageView_filtroJugadores, imageView_ordenarJugadoresAscendiente, imageView_ordenarJugadoresDescendiente; //Creamos los ImageViews
+    private String filtroActual; //Creamos un String para almacenar el filtro actual
+
+    //Constructor del Fragment de los jugadores
     public JugadoresFragment() {
     }
 
@@ -51,11 +54,12 @@ public class JugadoresFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        //Inflamos la vista del Fragment y asignamos el RecyclerView como Layout principal
         View view = inflater.inflate(R.layout.fragment_jugadores, container, false);
         recyclerView_jugadores = view.findViewById(R.id.recyclerViewJugadoresFragmentJugadores);
         recyclerView_jugadores.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //Inicializamos los ImageViews
         imageView_filtroJugadores = view.findViewById(R.id.imageViewFiltroFragmentJugadores);
         imageView_ordenarJugadoresAscendiente = view.findViewById(R.id.imageViewOrdenarFragmentJugadoresAscendiente);
         imageView_ordenarJugadoresDescendiente = view.findViewById(R.id.imageViewOrdenarFragmentJugadoresDescendiente);
@@ -68,6 +72,7 @@ public class JugadoresFragment extends Fragment {
         usuarioLogueado = auth.getCurrentUser();
         String correo = Objects.requireNonNull(usuarioLogueado).getEmail();
 
+        //Creamos el objeto SharedPreferences y un String para obtener y almacenar el nombre del equipo del que queremos mostarar los jugadoes
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("datos", Context.MODE_PRIVATE);
         String nombreEquipo = sharedPreferences.getString("nombreEquipo", null);
 
@@ -76,6 +81,7 @@ public class JugadoresFragment extends Fragment {
         collectionReference_equipos = collectionReference_usuario.document(Objects.requireNonNull(correo)).collection("Equipos");
         collectionReference_jugadores = collectionReference_equipos.document(nombreEquipo).collection("Jugadores");
 
+        //Creamos la query para consultar la base de datos
         Query query = collectionReference_jugadores;
 
         FirestoreRecyclerOptions<Jugador> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Jugador>().setQuery(query, Jugador.class).build();

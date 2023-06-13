@@ -55,7 +55,7 @@ public class Dashboard extends AppCompatActivity {
     private FirebaseUser usuarioLogueado; //Creamos una variable para almacenar el usuario que es logueo
     private CollectionReference collectionReference_equipos, collectionReference_usuario; //Creamos referencias a las colecciones de Equipo y Usuarios de la base de datos
     private List<Equipo> listaEquipos; //Creamos la lista de los equipos
-    Button cerrarSesion, anadirEquipo; //Creamos los Buttons del NavigationView
+    private Button cerrarSesion, anadirEquipo; //Creamos los Buttons del NavigationView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,18 +85,20 @@ public class Dashboard extends AppCompatActivity {
         //Inicializamos el TextView del nombre de usuario logueado
         textView_nombreLogueado = findViewById(R.id.textViewNombreLogueadoDashboard);
 
-        //Obtenemos la instancia de la base de datos y de la autenticación de Firebase y creamos un String con el correo del usuario loguedo
+        //Obtenemos la instancia de la base de datos y de la autenticación de Firebase
         database = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+
+        //Creamos un String y le asignamos el correo del usuario logueado actual obtenido
         usuarioLogueado = auth.getCurrentUser();
-        String correo = usuarioLogueado.getEmail();
+        String correo = Objects.requireNonNull(usuarioLogueado).getEmail();
 
         //Inicializamos las referencias de los Equipos y Usuarios de la base de datos
         collectionReference_usuario = database.collection("Usuarios");
         collectionReference_equipos = collectionReference_usuario.document(Objects.requireNonNull(correo)).collection("Equipos");
 
-        //Asignamos el nombre de usuario en el NavigationView y en el Dashboard
-        updateUserInfoInNavigationHeader();
+        //Llamamos al métod que se encarga de asignar el nombre de usuario en el NavigationView y en el Dashboard
+        actualizarInfoUsuarioHeaderDashboard();
 
         //Inicializamos la lista de equipos
         listaEquipos = new ArrayList<>();
@@ -120,9 +122,11 @@ public class Dashboard extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Creamos un objeto de tipo Equipo para obtener el nombre del equipo sobre el que se hizo click
                 Equipo equipo = listaEquipos.get(i);
                 String nombreEquipo = equipo.getNombreEquipo();
 
+                //Creamos el editor de SharedPreferences para guardar el nombre del equipo
                 SharedPreferences.Editor editor = getSharedPreferences("datos", MODE_PRIVATE).edit();
                 editor.putString("nombreEquipo", nombreEquipo);
                 editor.apply();
@@ -145,6 +149,13 @@ public class Dashboard extends AppCompatActivity {
         cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Creamos un archivo de SharedPreferences para almacenar los datos del usuario
+                SharedPreferences.Editor editor = getSharedPreferences("datos", MODE_PRIVATE).edit();
+
+                //Modificamos el booleano "recordar" para no recordar la sesión
+                editor.putBoolean("recordar", false);
+                editor.apply();
+
                 //Creamos un Intent para abrir la actividad de Login e iniciamos la actividad
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }
@@ -211,7 +222,7 @@ public class Dashboard extends AppCompatActivity {
     }
 
     //Actualizamos la información del usuario en la cabecera del NavigationView
-    private void updateUserInfoInNavigationHeader() {
+    private void actualizarInfoUsuarioHeaderDashboard() {
         //Si el String del usuario logueado es distinto a null, entramos aquí
         if (usuarioLogueado != null) {
             String correo = usuarioLogueado.getEmail(); //Creamos un String y le asignamos el correo del usuario loguedo
@@ -237,12 +248,15 @@ public class Dashboard extends AppCompatActivity {
 
     }
 
-
+    //Método de Firebase que obtiene el usuario que está logueado y actualiza la información del header del Dashboard
     private FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
         @Override
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            //Guardamos el usuario que está logueado en la variable
             usuarioLogueado = firebaseAuth.getCurrentUser();
-            updateUserInfoInNavigationHeader();
+
+            //Llamamos al método para actualizar la información del header
+            actualizarInfoUsuarioHeaderDashboard();
         }
     };
 
@@ -250,7 +264,6 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         auth.addAuthStateListener(authStateListener); //Llamamos al listener de la autenticación
     }
 
@@ -258,7 +271,6 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
         auth.removeAuthStateListener(authStateListener); //Eliminaal listener de la autenticación
     }
 

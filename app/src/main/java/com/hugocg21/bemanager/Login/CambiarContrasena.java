@@ -16,9 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.hugocg21.bemanager.R;
 
 public class CambiarContrasena extends AppCompatActivity {
-    Button button_enviarCodigo, button_volver; //Buttons para enviar el código de reseteo de la contraseña y para volver a la actividad anterior
-    EditText editText_correo; //EditText donde pedimos el correo del usuario
-    FirebaseAuth auth; //Variable para autenticar al usuario
+    private Button button_enviarCodigo, button_volver; //Buttons para enviar el código de reseteo de la contraseña y para volver a la actividad anterior
+    private EditText editText_correo; //EditText donde pedimos el correo del usuario
+    private FirebaseAuth auth; //Variable para autenticar al usuario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

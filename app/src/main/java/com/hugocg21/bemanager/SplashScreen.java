@@ -13,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hugocg21.bemanager.Login.Login;
 
 public class SplashScreen extends AppCompatActivity {
-    ImageView imageView_logoSplashScreen; //Creamos el ImageView del SplashScreen
-    boolean recordarSesion; //Creamos el booleano para recordar el usuario
-    Animation animacionSplashScreen; //Creamos la animación del SplashScreen
-    SharedPreferences sharedPreferences; //Creamos el objeto SharedPreferences
+    private ImageView imageView_logoSplashScreen; //Creamos el ImageView del SplashScreen
+    private boolean recordarSesion; //Creamos el booleano para recordar el usuario
+    private Animation animacionSplashScreen; //Creamos la animación del SplashScreen
+    private SharedPreferences sharedPreferences; //Creamos el objeto SharedPreferences
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

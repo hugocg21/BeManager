@@ -41,12 +41,14 @@ public class AdaptadorEquipos extends ArrayAdapter<Equipo> {
             view = inflater.inflate(idGridView, parent, false);
         }
 
-        Equipo equipo = listaEquipos.get(position); //Creamos un objeto de tipo Equipo y guardamos un equipo de la lista de equipos, dependiendo de la posicion
+        //Creamos un objeto de tipo Equipo y guardamos un equipo de la lista de equipos, dependiendo de la posicion
+        Equipo equipo = listaEquipos.get(position);
 
-        TextView textView_nombreEquipo = view.findViewById(R.id.textViewNombreEquipo); //Recogemos la referencia del TextView de la vista
+        //Creamos el TextView del equipo de la vista y le asignamos el equipo del jugador
+        TextView textView_nombreEquipo = view.findViewById(R.id.textViewNombreEquipo);
+        textView_nombreEquipo.setText(equipo.getNombreEquipo());
 
-        textView_nombreEquipo.setText(equipo.getNombreEquipo()); //Asigamos a ese TextView el nombre del equipo
-
-        return view; //Devolvemos la vista
+        //Devolvemos la vista
+        return view;
     }
 }

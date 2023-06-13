@@ -22,7 +22,7 @@
             android:name=".Entrenamientos.NuevoEjercicio"
             android:exported="false"
             android:label="Nuevo ejercicio"
-            android:parentActivityName=".Entrenamientos.DashboardEntrenamientos"
+            android:parentActivityName=".Equipo.DashboardEquipo"
             android:theme="@style/MiActionBar" />
         <activity
             android:name=".Entrenamientos.NuevoEntrenamiento"
