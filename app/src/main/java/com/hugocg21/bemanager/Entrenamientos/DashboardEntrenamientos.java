@@ -67,7 +67,7 @@ public class DashboardEntrenamientos extends AppCompatActivity {
         String correo = Objects.requireNonNull(usuarioLogueado).getEmail();
 
         //Creamos el objeto SharedPreferences y un String para obtener y almacenar el nombre del equipo al que queremos añadir el entrenamiento
-        SharedPreferences sharedPreferencesEquipo = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferencesEquipo = getSharedPreferences("datos", MODE_PRIVATE);
         String nombreEquipo = sharedPreferencesEquipo.getString("nombreEquipo", null);
 
         //Creamos el objeto SharedPreferences y un String para obtener y almacenar la fecha del entrenamiento al que queremos añadir el ejercicio
@@ -98,12 +98,13 @@ public class DashboardEntrenamientos extends AppCompatActivity {
                 documentReference_ejercicio = collectionReference_ejercicios.document(tituloEjercicio);
                 mostrarDescripcion(tituloEjercicio);
             }
+
             public void onDeleteClick(DocumentSnapshot documentSnapshot, int position) {
                 //Creamos un String para almacenar el ID del ejercicio y creamos una referencia al documento con el ID obtenido
                 String idEjercicio = documentSnapshot.getId();
                 DocumentReference documentReference_ejercicio = collectionReference_ejercicios.document(idEjercicio);
 
-                //Creamos un AlertDialog que se muestra en la actividad actual, le asignamos un mensaje y un mensaje
+                //Creamos un AlertDialog que se muestra en la actividad actual, le asignamos un título y un mensaje
                 AlertDialog.Builder builder = new AlertDialog.Builder(DashboardEntrenamientos.this);
                 builder.setTitle("Eliminar ejercicio");
                 builder.setMessage("¿Está seguro que desea eliminar este ejercicio?");

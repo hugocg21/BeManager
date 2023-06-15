@@ -42,7 +42,7 @@ public class JugadoresFragment extends Fragment {
 
     //Creamos las referencias a las colecciones jugadores, equipos y usuarios
     private CollectionReference collectionReference_jugadores, collectionReference_equipos, collectionReference_usuario;
-    private AdaptadorJugadores adaptadorJugadores; //Cremos el adaptador
+    private AdaptadorJugadores adaptadorJugadores; //Creamos el adaptador
     private ImageView imageView_filtroJugadores, imageView_ordenarJugadoresAscendiente, imageView_ordenarJugadoresDescendiente; //Creamos los ImageViews
     private String filtroActual; //Creamos un String para almacenar el filtro actual
 
@@ -72,9 +72,9 @@ public class JugadoresFragment extends Fragment {
         usuarioLogueado = auth.getCurrentUser();
         String correo = Objects.requireNonNull(usuarioLogueado).getEmail();
 
-        //Creamos el objeto SharedPreferences y un String para obtener y almacenar el nombre del equipo del que queremos mostarar los jugadoes
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("datos", Context.MODE_PRIVATE);
-        String nombreEquipo = sharedPreferences.getString("nombreEquipo", null);
+        //Creamos el objeto SharedPreferences y un String para obtener y almacenar el nombre del equipo al que queremos añadir el entrenamiento
+        SharedPreferences sharedPreferencesEquipo = getContext().getSharedPreferences("datos", Context.MODE_PRIVATE);
+        String nombreEquipo = sharedPreferencesEquipo.getString("nombreEquipo", null);
 
         //Inicializamos las referencias a las colecciones
         collectionReference_usuario = database.collection("Usuarios");
@@ -84,38 +84,49 @@ public class JugadoresFragment extends Fragment {
         //Creamos la query para consultar la base de datos
         Query query = collectionReference_jugadores;
 
+        //Creamos el objeto FirestoreRecyclerOptions de tipo Jugador y le asignamos la query
         FirestoreRecyclerOptions<Jugador> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Jugador>().setQuery(query, Jugador.class).build();
 
+        //Creamos, asignamos el adaptador del RecyclerView, asignandole el objeto FirestoreRecyclerOptions y controlamos cuando se hace click sobre cualquier elemento
         adaptadorJugadores = new AdaptadorJugadores(firestoreRecyclerOptions, new AdaptadorJugadores.OnItemClickListener() {
             public void onDeleteClick(DocumentSnapshot documentSnapshot, int position) {
+                //Creamos un String para almacenar el ID del jugador y creamos una referencia al documento con el ID obtenido
                 String idJugador = documentSnapshot.getId();
                 DocumentReference documentReference_jugador = collectionReference_jugadores.document(idJugador);
 
+                //Creamos un AlertDialog que se muestra en la actividad actual, le asignamos un título y un mensaje
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Eliminar jugador");
                 builder.setMessage("¿Está seguro que desea eliminar a este jugador?");
+
+                //Método que controla el click sobre uno de sus botones de control
                 builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        //Eliminamos el documento de la base de datos
                         documentReference_jugador.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
+                                //Creamos y mostramos un mensaje emergente informando que el jugador ha sido eliminado correctamente
                                 Toast.makeText(getContext(), "Jugador eliminado correctamente", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                //Creamos y mostramos un mensaje emergente informando que ha ocurrido un error al eliminar el jugador
                                 Toast.makeText(getContext(), "Ha habido un error eliminando el jugador", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 });
 
+                //Asginamos el texto "Cancelar" a otro botón de control del AlertDialog, lo creamos y lo mostramos
                 builder.setNegativeButton("Cancelar", null);
                 builder.create().show();
             }
         });
 
+        //Asignamos el adaptador al RecyclerView y le notificamos de cualquier cambio posible
         adaptadorJugadores.notifyDataSetChanged();
         recyclerView_jugadores.setAdapter(adaptadorJugadores);
 
@@ -126,93 +137,127 @@ public class JugadoresFragment extends Fragment {
             }
         });
 
+        //Método al hacer click en el ImageView de ordenar a los jugadores de manera Acendiente
         imageView_ordenarJugadoresAscendiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Llamamos al método para ordenar a los jugadores de manera ascendiente
                 ordernarJugadoresAscendente();
             }
         });
 
+        //Método al hacer click en el ImageView de ordenar a los jugadores de manera Descendiente
         imageView_ordenarJugadoresDescendiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Llamámos al método para ordenar a los jugadores de manera descendiente
                 ordernarJugadoresDescendiente();
             }
         });
 
+        //Devolvemos el view del fragment
         return view;
     }
 
+    //Método que ordena a los jugadores de manera descendiente según la fecha del entrenamiento
     private void ordernarJugadoresDescendiente() {
+        //Creamos la query con la condición de ordenar de manera descendiente, comprobando el filtro actual
         Query query;
         if (filtroActual != null) {
+            //Si el filtro tiene un valor, ordenamos por ese filtro
             query = collectionReference_jugadores.orderBy(filtroActual, Query.Direction.DESCENDING);
         } else {
+            //Si no hay ningún filtro seleccionado, ordenamos por el nombre del jugador
             query = collectionReference_jugadores.orderBy("nombreJugador", Query.Direction.ASCENDING);
         }
 
+        //Creamos el objeto FirestoreRecyclerOptions de tipo Jugador y le asignamos la query nueva con la condición de ordenar y actualizamos las opciones del filtro
         FirestoreRecyclerOptions<Jugador> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Jugador>()
                 .setQuery(query, Jugador.class).build();
         adaptadorJugadores.actualizarOpciones(firestoreRecyclerOptions);
 
+        //Cambiamos la visibilidad de los ImageView para ocultar el de ordenar de manera descendiente y mostrar el ascendiente
         imageView_ordenarJugadoresDescendiente.setVisibility(View.INVISIBLE);
         imageView_ordenarJugadoresAscendiente.setVisibility(View.VISIBLE);
     }
 
+    //Método que ordena a los jugadores de manera ascendiente según la fecha del entrenamiento
     private void ordernarJugadoresAscendente() {
+        //Creamos la query con la condición de ordenar de manera descendiente, comprobando el filtro actual
         Query query;
         if (filtroActual != null) {
+            //Si el filtro tiene un valor, ordenamos por ese filtro
             query = collectionReference_jugadores.orderBy(filtroActual, Query.Direction.ASCENDING);
         } else {
+            //Si no hay ningún filtro seleccionado, ordenamos por el nombre del jugador
             query = collectionReference_jugadores.orderBy("nombreJugador", Query.Direction.ASCENDING);
         }
 
+        //Creamos el objeto FirestoreRecyclerOptions de tipo Jugador y le asignamos la query nueva con la condición de ordenar y actualizamos las opciones del filtro
         FirestoreRecyclerOptions<Jugador> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Jugador>()
                 .setQuery(query, Jugador.class).build();
         adaptadorJugadores.actualizarOpciones(firestoreRecyclerOptions);
 
+        //Cambiamos la visibilidad de los ImageView para ocultar el de ordenar de manera descendiente y mostrar el ascendiente
         imageView_ordenarJugadoresAscendiente.setVisibility(View.INVISIBLE);
         imageView_ordenarJugadoresDescendiente.setVisibility(View.VISIBLE);
     }
 
+    //Método que crea y muetra el Dialog del filtro
     private void mostrarFiltroDialog() {
+        //Creamos un AlertDialog que se muestra en la actividad actual, le asignamos un título y las opciones del filtro
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Ordenar jugadores");
         String[] opcionesOrder = {"Dorsal", "Nombre", "Posición"};
+
+        //Asignamos las opciones de filtrado al AlertDialog
         builder.setItems(opcionesOrder, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                //Creamos un String y recogemos la opción elegida en el filtro
                 String opcionElegida = opcionesOrder[i];
                 if (opcionElegida.equals("Dorsal")) {
+                    //Si el usuario eligio el dorsal del jugador, le asginamos la cadena al String
                     filtroActual = "dorsalJugador";
                 } else if (opcionElegida.equals("Nombre")) {
+                    //Si el usuario eligio el nombre del jugador, le asginamos la cadena al String
                     filtroActual = "nombreJugador";
                 } else {
+                    //Si el usuario eligio la posición del jugador, le asginamos la cadena al String
                     filtroActual = "posicionJugadorNumero";
                 }
 
+                //Llamámos al método para ordenar a los jugadores pasándole el filtro seleccionado
                 ordernarJugadores(filtroActual);
             }
         });
 
+        //Mostramos el AlertDialog
         builder.show();
     }
 
+    //Método que ordena a los jugadores según el filtro que reciba
     private void ordernarJugadores(String filtroActual) {
+        //Creamos la query para ordenar según el filtro deseado
         Query query = collectionReference_jugadores.orderBy(filtroActual);
+
+        //Creamos el objeto FirestoreRecyclerOptions de tipo Jugador y le asignamos la query nueva con la condición de ordenar y actualizamos las opciones del filtro
         FirestoreRecyclerOptions<Jugador> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Jugador>().setQuery(query, Jugador.class).build();
         adaptadorJugadores.actualizarOpciones(firestoreRecyclerOptions);
 
+        //Cambiamos la visibilidad de los ImageView para ocultar el de ordenar de manera descendiente y mostrar el ascendiente
         imageView_ordenarJugadoresAscendiente.setVisibility(View.INVISIBLE);
         imageView_ordenarJugadoresDescendiente.setVisibility(View.VISIBLE);
     }
 
+    //Método para controlar el inicio de la actividad y la actividad del adaptador
     @Override
     public void onStart() {
         super.onStart();
         adaptadorJugadores.startListening();
     }
 
+    //Método para controlar el fin de la actividad y la actividad del adaptador
     @Override
     public void onStop() {
         super.onStop();
